@@ -1,3 +1,7 @@
+function [ y ] =AMSSB(ch)
+% ch: is an input deciding which signal you would like to tune into.
+% ch = 1, 2, 3 for AM-DSB and ch=1,…, 6 for AM-SSB.
+
 %Variables
 
 	%Center frequencies for the 3 double sided signals (in Hz)
@@ -25,7 +29,7 @@
 	scaling_factor = 4; %Four for signle sided demodulation
 
 	%Temp var; will be input var to the function
-	ch = 6; %chooses which signal to pull out
+	%ch = 6; %chooses which signal to pull out
 
 	%Temp var; will be output var to the function
 	y = 0; %Output sound file

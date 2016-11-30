@@ -3,15 +3,17 @@ function [ y ] =AMDSB(ch)
 % ch = 1, 2, 3 for AM-DSB and ch=1,…, 6 for AM-SSB.
 
 %Variables
+    duration=8;
+    f_sample=44100; 
+    t=(((0-4)*f_sample+0.5):((duration-4)*f_sample-0.5))/f_sample;
+    [radio1, f_sample]=audioread('radio1.wav');
+    radio1=radio1';
 
 	%Center frequencies for the 3 double sided signals (in Hz)
 	freq = [2000, 4000, 6000]; %All frequencies (Hz)	
 
 	%Filtering frequency for the low pass filter
 	LPF_freq = 1000; % (Hz)
-
-	%Radio file that will be read in 
-	radio1 = 0;
 
 	%Radio file after a band pass filter is applied
 	BPF_sig = 0;
@@ -35,10 +37,6 @@ function [ y ] =AMDSB(ch)
 	y = 0; %Output sound file
 	
 %Actions
-
-	%Pre step: Load in the radio file into a workable format
-	[radio1, f_sample]=audioread('radio1.wav');
-	radio1=radio1';
 	
 	%Step 1: Band pass filter the radio file
     f = freq(ch);
@@ -54,11 +52,11 @@ function [ y ] =AMDSB(ch)
 	scaled_sig = LPF_sig * scaling_factor;
 
 	%Step 5: Define the output value as the scaled value
-	y = scaled_sig;	
+	y = scaled_sig;
     
-    soundsc(scaled_sig,f_sample)
-    plot(t,fft(scaled_sig),t,fft(x1))
-    legend('show')
+    soundsc(scaled_sig,f_sample);
+    %plot(t,fft(scaled_sig),t,fft(x1))
+    %legend('show')
 
 
 
