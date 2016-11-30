@@ -1,7 +1,7 @@
 %Variables
 
 	%Center frequencies for the 3 double sided signals (in Hz)
-	freq[3] = {1000, 2500, 4000}; %All frequencies (Hz)	
+	freq = [2000, 4000, 6000]; %All frequencies (Hz)	
 
 	%Filtering frequency for the low pass filter
 	LPF_freq = 1000; % (Hz)
@@ -25,7 +25,7 @@
 	scaling_factor = 2; %Two for double sided demodulation
 
 	%Temp var; will be input var to the function
-	ch = 0; %chooses which signal to pull out
+	ch = 3; %chooses which signal to pull out
 
 	%Temp var; will be output var to the function
 	y = 0; %Output sound file
@@ -37,10 +37,11 @@
 	radio1=radio1';
 	
 	%Step 1: Band pass filter the radio file
-	BPF_sig = BPF(radio1, freq[ch] - LPF_freq, freq[ch] + LPF_freq, t);
+    f = freq(ch);
+	BPF_sig = BPF(radio1, f - LPF_freq, f + LPF_freq, t);
 
 	%Setp 2: Frequency shift the filtered sound file
-	freq_sig = freq_shift(BPF_sig, freq[ch], t);
+	freq_sig = freq_shift(BPF_sig, f, t);
 
 	%Step 3: LPF the shifted signal
 	LPF_sig = LPF(freq_sig, LPF_freq, t);
@@ -50,7 +51,10 @@
 
 	%Step 5: Define the output value as the scaled value
 	y = scaled_sig;	
-
+    
+    soundsc(scaled_sig,f_sample)
+    plot(t,fft(scaled_sig),t,fft(x1))
+    legend('show')
 
 
 

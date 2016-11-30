@@ -4,9 +4,9 @@
 	freq_1 = 2000; %First signal (Hz)
 	freq_2 = 3000; %Second signal (Hz)
 	freq_3 = 4000; %Third signal (Hz)
-	freq_1 = 5000; %Fourth signal (Hz)
-	freq_2 = 6000; %Fifth signal (Hz)
-	freq_3 = 7000; %Sixth signal (Hz)
+	freq_4 = 5000; %Fourth signal (Hz)
+	freq_5 = 6000; %Fifth signal (Hz)
+	freq_6 = 7000; %Sixth signal (Hz)
 
 	%Filtering frequency for the low pass filter
 	LPF_freq = 1000; % (Hz)
@@ -66,10 +66,14 @@
 	single_6 = LPF(freq_sig_6, freq_6, t);
 
 	%Step 4: Add each signal together
-	radio_sound = signle_1 + signle_2 + signle_3 + signle_4 + signle_5 + signle_6;
+	radio_sound = single_1 + single_2 + single_3 + single_4 + single_5 + single_6;
+    
 
 	%Step 5: Write the new signal to a file
-	audiowrite(‘radio2.wav’, radio_sound,44100);
+	audiowrite('radio2.wav', radio_sound,44100);
+    soundsc(LPF_1,f_sample)
+    plot(t, fft(radio_sound));
+    
 
 
 
